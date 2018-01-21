@@ -25,6 +25,10 @@ export default new Router({
     // mode:'history',
     routes: [
     {
+        path: '/',
+        component: login,
+    },
+    {
         path: '/test',
         component: test,
         children: [
