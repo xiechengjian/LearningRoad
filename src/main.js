@@ -20,7 +20,6 @@ import 'iview/dist/styles/iview.css';
 // import './bootstrap/js/bootstrap.min.js'
 // import './bootstrap/css/bootstrap.min.css' 
 // window.addEventListener('load',loading);
-console.log(11111111111);
 
 // function loading(){
 //   console.log('loading');
@@ -38,7 +37,7 @@ var ve = new Vue({
     d: 4
   },
   watch: {
-    a: function() {
+    a: function () {
       // console.log("new a :"+this.a);
     }
   },
@@ -49,4 +48,3 @@ var ve = new Vue({
 })
 // console.log(ve.$children[0].$children[0]);
 // ve.$data.a = 100;
-
