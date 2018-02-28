@@ -1,9 +1,9 @@
 <template >
     <div >
-<Row :gutter="16" class="code-row-bg">
+<Row :gutter= "16"  class="code-row-bg">
         <Button span="8" class="LightPrimary">col-12</Button>
-        <Col span="8">col-12</Col>
-    </Row>
+        <Col span="8">asdasd</Col>
+</Row>
             <button type="button" @mouseup="toggle" @focus="bottonFocus">Toggle Login type</button>
             <button type="button" @mouseup="reset">reset</button>
             <button type="button" @click.prevent.self="doThis">事件处理</button>
@@ -80,11 +80,11 @@
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 <script>
-    import username from './username.vue'
-    import email from './email.vue'
-    import childRender from './childRender.vue'
-    import Vue from 'vue'
-    import chart from './chart.js'
+import username from "./username.vue";
+import email from "./email.vue";
+import childRender from "./childRender.vue";
+import Vue from "vue";
+import chart from "./chart.js";
 // import $ from 'jquery'
 
 // import 'bootstrap/dist/js/bootstrap.min.js'
@@ -95,140 +95,162 @@ for (let i in iterable) {
   //console.log(i); //  0, 1, 2, "foo", "arrCustom", "objCustom"
 }
 export default {
-    components:{
-        'app-username': username,
-        'app-email': email,
-        'app-childRender': childRender,
-        'app-chart': chart,
-    },
-    data() {
-        return {
-            vue:new Vue(),
-            currentView:'app-username',
-            loginType: false,
-            init: true,
-            text: 'mes',
-            chartData: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                datasets: [{
-                    label: 'GitHub Commits',
-                    backgroundColor: '#f87979',
-                    data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-                }]
-            },
-            newTodo: '',
-            items: [{
-                message: 'xie'
-            }, {
-                message: 'cj'
-            }],
-            userMes:{
-                name:'cjxie'
-            },
-            nums:[1,2,3],
-            toDoLists: [{
-                id: 10,
-                title: 'Do the dishes',
-            }, {
-                id: 11,
-                title: 'Take out the trash',
-            }, {
-                id: 12,
-                title: 'Mow the lawn'
-            }],
-            nextTodoID:13,
-            username:'NONAME'
-        }
-    },
-    mounted() {
-        console.log('Testmounted');
-        this.vue.$on('listenusername',function(data){
-            console.log('ReceivedUsernameDATA---same');
-            this.nums = data.sort();
-        })
-    },
-    destroyed() {
-        console.log('Testdestroyed');
-    },
-    beforeRouteUpdate (to, from, next){
-        next();
-        // console.log(history.length);
-    },
-    computed:{
-        usernameLength:function(now){
-            console.log('computed:',this.username);
-            return this.username.length;
-        }
-    },
-    methods: {
-        toggle:function(){
-            //this.init = true;
-            //this.loginType = ! this.loginType;
-            // this.items[0].message='ooo';
-            this.nums.splice( 2, 0 ,this.nums.length + 1);
-            // console.log($('.box1').text());
-            //console.log(this.$route);
-            //this.nums = _.shuffle(this.nums)
-            this.items.push({message:'haha'});
-            this.items = this.items.filter(function(item) {
-                return item.message.match(/cj|x+/)
-            })
-            // console.log(this.items);
+  components: {
+    "app-username": username,
+    "app-email": email,
+    "app-childRender": childRender,
+    "app-chart": chart
+  },
+  data() {
+    return {
+      vue: new Vue(),
+      currentView: "app-username",
+      loginType: false,
+      init: true,
+      text: "mes",
+      chartData: {
+        labels: [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December"
+        ],
+        datasets: [
+          {
+            label: "GitHub Commits",
+            backgroundColor: "#f87979",
+            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+          }
+        ]
+      },
+      newTodo: "",
+      items: [
+        {
+          message: "xie"
         },
-        reset:function(event) {
-            Vue.set(this.userMes,'age',24);
-            this.$set(this.userMes,'hight',175);
-            //this.nums.length=3;
-            this.nums.splice(3);
-            console.log(event.target.tagName);
-            if(this.currentView =='app-email'){
-                this.currentView = 'app-username';
-            }else{
-                this.currentView = 'app-email';
-            }            
-            //setTimeout(function(this){
-            //this.$forceUpdate();
-            //}, 200);
-       },
-       get: function(data) {
-            console.log(data,'ReceivedUsernameDATA----dif');
-            this.nums = data.sort();
-       },
-       addNewTodo:function(newTodo){
-            this.toDoLists.push({
-                id:this.nextTodoID++,
-                title:newTodo
-            })
-            this.newTodo='';
-            console.log(this.toDoLists);
-       },
-       doThis:function(e){
-            //console.log("BOX1");
-            //e.preventDefault();
-       },
-       stop:function(e){
-            e.stopPropagation();
-            console.log("A") 
-            e.preventDefault();
-       },
-       bottonFocus:function(e){
-        console.log('bottonFocus',e);
-       }
-    },
-    watch:{
-        loginType:function(now){
-            if(!now){
-                //this.nums=[1,1,1,1,1,1,1,1]
-            }
-        },
-        username:function(now){
-            console.log('usernameChanged:ReceivedUsernameDATA----dif');
-        },
-        '$route' (to, from) {
-            console.log('对路由变化作出响应...from:'+ from +'to:'+String(to));      // 对路由变化作出响应...
+        {
+          message: "cj"
         }
+      ],
+      userMes: {
+        name: "cjxie"
+      },
+      nums: [1, 2, 3],
+      toDoLists: [
+        {
+          id: 10,
+          title: "Do the dishes"
+        },
+        {
+          id: 11,
+          title: "Take out the trash"
+        },
+        {
+          id: 12,
+          title: "Mow the lawn"
+        }
+      ],
+      nextTodoID: 13,
+      username: "NONAME"
+    };
+  },
+  mounted() {
+    console.log("Testmounted");
+    this.vue.$on("listenusername", function(data) {
+      console.log("ReceivedUsernameDATA---same");
+      this.nums = data.sort();
+    });
+  },
+  destroyed() {
+    console.log("Testdestroyed");
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    // console.log(history.length);
+  },
+  computed: {
+    usernameLength: function(now) {
+      console.log("computed:", this.username);
+      return this.username.length;
     }
-}
+  },
+  methods: {
+    toggle: function() {
+      //this.init = true;
+      //this.loginType = ! this.loginType;
+      // this.items[0].message='ooo';
+      this.nums.splice(2, 0, this.nums.length + 1);
+      // console.log($('.box1').text());
+      //console.log(this.$route);
+      //this.nums = _.shuffle(this.nums)
+      this.items.push({ message: "haha" });
+      this.items = this.items.filter(function(item) {
+        return item.message.match(/cj|x+/);
+      });
+      // console.log(this.items);
+    },
+    reset: function(event) {
+      Vue.set(this.userMes, "age", 24);
+      this.$set(this.userMes, "hight", 175);
+      //this.nums.length=3;
+      this.nums.splice(3);
+      console.log(event.target.tagName);
+      if (this.currentView == "app-email") {
+        this.currentView = "app-username";
+      } else {
+        this.currentView = "app-email";
+      }
+      //setTimeout(function(this){
+      //this.$forceUpdate();
+      //}, 200);
+    },
+    get: function(data) {
+      console.log(data, "ReceivedUsernameDATA----dif");
+      this.nums = data.sort();
+    },
+    addNewTodo: function(newTodo) {
+      this.toDoLists.push({
+        id: this.nextTodoID++,
+        title: newTodo
+      });
+      this.newTodo = "";
+      console.log(this.toDoLists);
+    },
+    doThis: function(e) {
+      //console.log("BOX1");
+      //e.preventDefault();
+    },
+    stop: function(e) {
+      e.stopPropagation();
+      console.log("A");
+      e.preventDefault();
+    },
+    bottonFocus: function(e) {
+      console.log("bottonFocus", e);
+    }
+  },
+  watch: {
+    loginType: function(now) {
+      if (!now) {
+        //this.nums=[1,1,1,1,1,1,1,1]
+      }
+    },
+    username: function(now) {
+      console.log("usernameChanged:ReceivedUsernameDATA----dif");
+    },
+    $route(to, from) {
+      console.log("对路由变化作出响应...from:" + from + "to:" + String(to)); // 对路由变化作出响应...
+    }
+  }
+};
 // export default {
 //   data () {
 //     return {
@@ -255,55 +277,58 @@ export default {
 //   }
 // })
 
-
-Vue.component('todo-item', {
-  template: '\
+Vue.component("todo-item", {
+  template:
+    "\
     <li>\
       {{ title }}\
-      <button v-on:click="$emit(\'remove\')">X</button>\
+      <button v-on:click=\"$emit('remove')\">X</button>\
     </li>\
-  ',
-  props: ['title']
-})
+  ",
+  props: ["title"]
+});
 </script>
 <style lang="scss" scoped>
-$bgc:red;
-.icon-fanhui{
-    color: $bgc;
+$bgc: red;
+.icon-fanhui {
+  color: $bgc;
 }
-.box1{  
-    height: 200px;  
-    width: 600px;  
-    margin: 0 auto;
-    background:black;    
-}  
-.box1 a{  
-    display: block;  
-    height: 50%;  
-    width: 50%;  
-    background:red;  
+.box1 {
+  height: 200px;
+  width: 600px;
+  margin: 0 auto;
+  background: black;
 }
-.component-fade-enter-active, .component-fade-leave-active {
-  transition: opacity .5s ease;
+.box1 a {
+  display: block;
+  height: 50%;
+  width: 50%;
+  background: red;
 }
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active for below version 2.1.8 */ {
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.component-fade-enter,
+.component-fade-leave-to {
   opacity: 0;
 }
-.usernameFade-enter-active, .usernameFade-leave-active {
-    transition: all .5s
+.usernameFade-enter-active,
+.usernameFade-leave-active {
+  transition: all 0.5s;
 }
-.usernameFade-enter, .usernameFade-leave-to{
-    transform: translateX(10px);
-    opacity: 0;
+.usernameFade-enter,
+.usernameFade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 .list-item {
   transition: all 1s;
   display: inline-block;
   margin-right: 10px;
 }
-.list-num-move{
-    transition: transform 1s;
+.list-num-move {
+  transition: transform 1s;
 }
 /*.list-num-enter, .list-num-leave-to{
     opacity: 0;

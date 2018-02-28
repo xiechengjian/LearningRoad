@@ -16,24 +16,24 @@
 
 <script>
 console.log('appVueLoading.........');
-window.onload=function(){
-  document.getElementById('loading').style="display:none";
-  console.log('appVueLoaded!');
+window.onload = function () {
+    document.getElementById('loading').style = "display:none";
+    console.log('appVueLoaded!');
 }
 export default {
-  data(){
-    return {
-      nums:[1,8,2,5,3,4,7,9,6]
-    }
-  },
-  mounted() {
-  },
-  components: {}
+    data() {
+        return {
+            nums: [1, 8, 2, 5, 3, 4, 7, 9, 6]
+        }
+    },
+    mounted() {
+    },
+    components: {}
 }
-window.onhashchange = function(event) {
-  console.log(event.oldURL, event.newURL);
-  let hash = location.hash.slice(1);
-  document.body.style.color = hash;
+window.onhashchange = function (event) {
+    console.log(event.oldURL, event.newURL);
+    let hash = location.hash.slice(1);
+    document.body.style.color = hash;
 }
 </script>
 

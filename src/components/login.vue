@@ -1,7 +1,7 @@
 <template>
     <div class="login">
             <Spin fix v-if="loading">
-                <Icon type="load-c" size=38 class="demo-spin-icon-load"></Icon>
+                <Icon type="load-c" size="38" class="demo-spin-icon-load"></Icon>
                 <div>Loading</div>
             </Spin>
         <div class="continer">
@@ -58,95 +58,114 @@
 
 
 <script>
-    export default {
-        name: 'login',
-        data() {
-            let name = "",
-                pwd = "";
-            if (sessionStorage.getItem("remberPwd")) {
-                name = sessionStorage.getItem("fiberhome_name");
-                pwd = sessionStorage.getItem("fiberhome_pwd");
-            }
-            return {
-                message: 'HELLO',
-                pwdErrMsg: '',
-                userErrMsg: '',
-                username: name,
-                password: pwd,
-                autoLogin: false,
-                remberPwd: false,
-                loading:true,
-            }
-        },
-        computed: {
-            // 计算属性的 getter
-            reversedMessage: function() {
-                // `this` 指向 vm 实例
-                return this.message.split('').reverse().join('');
-            }
-        },
-        mounted(){
-            var newImg = new Image();
-            newImg.src='././static/img/bg.jpg';
-            newImg.onload=(()=>{
-                this.loading = false;
-                console.log('this.loading = false');
-            })
-        },
-        methods: {
-            //提交按钮
-            submit() {
-                if (!this.username) {
-                    this.userErrMsg = '请输入用户名';
-                    return;
-                } else if (!this.password) {
-                    this.pwdErrMsg = '请输入密码';
-                    return;
-                } else if (this.username !== 'admin') {
-                    this.userErrMsg = '用户名不存在';
-                    return;
-                } else if (this.password !== 'admin') {
-                    this.pwdErrMsg = '密码错误';
-                    return;
-                } else {
-                    //登录成功
-                    console.log("登录成功！");
-                    if (this.remberPwd) {
-                        sessionStorage.setItem('remberPwd', this.remberPwd);
-                        sessionStorage.setItem('fiberhome_name', this.username);
-                        sessionStorage.setItem('fiberhome_pwd', this.password);
-                    }
+// import router from 'router'
+export default {
+    name: "login",
+    data() {
+        let name = "",
+            pwd = "";
+        if (sessionStorage.getItem("remberPwd")) {
+            name = sessionStorage.getItem("fiberhome_name");
+            pwd = sessionStorage.getItem("fiberhome_pwd");
+        }
+        return {
+            message: "HELLO",
+            pwdErrMsg: "",
+            userErrMsg: "",
+            username: name,
+            password: pwd,
+            autoLogin: false,
+            remberPwd: false,
+            loading: true
+        };
+    },
+    computed: {
+        // 计算属性的 getter
+        reversedMessage: function () {
+            // `this` 指向 vm 实例
+            return this.message
+                .split("")
+                .reverse()
+                .join("");
+        }
+    },
+    mounted() {
+        var newImg = new Image();
+        newImg.src = "././static/img/bg.jpg";
+        newImg.onload = () => {
+            this.loading = false;
+            console.log("this.loading = false");
+        };
+    },
+    methods: {
+        //提交按钮
+        submit() {
+            if (!this.username) {
+                this.userErrMsg = "请输入用户名";
+                return;
+            } else if (!this.password) {
+                this.pwdErrMsg = "请输入密码";
+                return;
+            } else if (this.username !== "admin" && this.username !== "bug") {
+                this.userErrMsg = "用户名不存在";
+                return;
+            } else if (this.password !== "admin" && this.password !== "bug") {
+                this.pwdErrMsg = "密码错误";
+                return;
+            } else if (this.username == "bug" && this.password == "bug") {
+                // router.push('/fo');
+                location.href = '#/fo';
+            } else {
+                //登录成功
+                console.log("登录成功！");
+                if (this.remberPwd) {
+                    sessionStorage.setItem("remberPwd", this.remberPwd);
+                    sessionStorage.setItem("fiberhome_name", this.username);
+                    sessionStorage.setItem("fiberhome_pwd", this.password);
                 }
-            },
-            nameBlur() {
-                if (this.username.length < 3 || this.username.length > 8) {
-                    this.userErrMsg = '用户名长度必须大于三位数且少于八位数';
-                }
-            },
-            pwdBlur() {
-                if (this.password.length < 3 || this.password.length > 8) {
-                    this.pwdErrMsg = '密码长度必须大于三位数且少于八位数';
-                }
-            },
+            }
         },
-        watch: {
-            autoLogin: function autogin(argument) {
-                // sessionStorage.setItem('isLogin', now);
-            },
-            remberPwd: function remberPwd(now) {
-                console.log(now);
-
-            },
+        nameBlur() {
+            if (this.username.length < 3 || this.username.length > 8) {
+                this.userErrMsg = "用户名长度必须大于三位数且少于八位数";
+            }
+        },
+        pwdBlur() {
+            if (this.password.length < 3 || this.password.length > 8) {
+                this.pwdErrMsg = "密码长度必须大于三位数且少于八位数";
+            }
+        }
+    },
+    watch: {
+        autoLogin: function autogin(argument) {
+            // sessionStorage.setItem('isLogin', now);
+        },
+        remberPwd: function remberPwd(now) {
+            console.log(now);
         }
     }
+};
 </script>
 <style scoped>
-@import '../../static/css/login.css';
-.box { animation: moveup 10s  linear infinite; }
-.page { overflow: hidden; }
+@import "../../static/css/login.css";
+.box {
+  animation: moveup 10s linear infinite;
+}
+.page {
+  overflow: hidden;
+}
 
 /*样式*/
-.page { margin-top: 200px; height: 100px; border-top: 2px solid lightblue; border-bottom: 2px solid red; }
-.box {margin: 0;}
-.box li{ line-height: 30px; }
+.page {
+  margin-top: 200px;
+  height: 100px;
+  border-top: 2px solid lightblue;
+  border-bottom: 2px solid red;
+}
+.box {
+  margin: 0;
+}
+.box li {
+  line-height: 30px;
+}
 </style>
