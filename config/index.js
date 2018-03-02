@@ -20,20 +20,20 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     proxyTable: {
-        '/5g': {
-            target: 'http://localhost:8088/5g',
-            changeOrigin: true,
-            pathRewrite: {
-                '^/5g': '/'
-            }
+      '/5g': {
+        target: 'http://localhost:8088/5g',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/5g': '/'
         }
-        // '/5g/api': {
-        //  target: 'http://localhost:8088/5g/api',
-        //  changeOrigin: true,
-        //  pathRewrite: {
-        //      '^/5g/api': '/'
-        //  }
-        // }      
+      }
+      // '/5g/api': {
+      //  target: 'http://localhost:8088/5g/api',
+      //  changeOrigin: true,
+      //  pathRewrite: {
+      //      '^/5g/api': '/'
+      //  }
+      // }      
     },
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
@@ -69,8 +69,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: '../../static',
+    assetsPublicPath: './',
 
     /**
      * Source Maps
