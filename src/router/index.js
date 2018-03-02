@@ -31,6 +31,9 @@ const human = (resolve) => {
 const shopping = (resolve) => {
     require(['@/components/shopping/shopping.vue'], resolve)
 }
+const cart = (resolve) => {
+    require(['@/components/shopping/cart.vue'], resolve)
+}
 export default new Router({
     // mode:'history',
     routes: [{
@@ -94,7 +97,12 @@ export default new Router({
         path: '/shopping',
         component: shopping,
         name: 'shopping'
-    }
+    },
+    {
+        path: '/cart',
+        component: cart,
+        name: 'cart'
+    },
 
     ]
 })

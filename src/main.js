@@ -9,6 +9,7 @@ import 'iview/dist/styles/iview.css';
 import 'iview/dist/styles/iview.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import '../static/css/cartTable.css';
 // import './assets/bootstrap/js/bootstrap.min';
 // import './assets/bootstrap/css/bootstrap.min.css';
 // import './assets/bootstrap/css/bootstrap.min.css';

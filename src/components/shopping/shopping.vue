@@ -15,19 +15,30 @@
                                 <dd><span>{{product.desc}}</span></dd>
                             </dl>
                             <dl class="dl-horizontal">
-                                <dt>价格：</dt>
-                                <dd><span>￥{{product.price}}</span></dd>
+                                <dt style="line-height: 30px;">价格：</dt>
+                                <dd><span>￥</span><span class="price">{{product.price}}</span></dd>
                             </dl>
                             <dl class="dl-horizontal">
                                 <dt>外观：</dt>
                                 <dd>
-                                    <ul>
-                                    <li v-for="style in product.style" :key='style.color'
-                                        @click="changeStyle(product.id,style.url)"
+                                    <ul class="style">
+                                    <li v-for="style in product.style" :key='style.color' 
+                                        @click="changeStyle(product.id,style.url,$event)"
                                         :class="{active: product.activeStyleUrl == style.url}"><span>{{style.color}}</span></li>
                                     </ul>
                                 </dd>
                             </dl>
+                            <dl class="dl-horizontal">
+                                <dt>容量：</dt>
+                                <dd>
+                                    <ul class="storage">
+                                    <li v-for="(price,key) in product.storage" :key='key'
+                                        @click="changePrice(product.id,price)"
+                                        :class="{active: product.price == price}"><span>{{key}}</span></li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                            <Button type="error" style="width: 250px;" @click="addCart()"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</Button>
                          </div>
                          </div>
                     </div>
@@ -38,14 +49,20 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import $ from 'jQuery'
 export default {
+    data() {
+        return {
+            currnetStyle: {
+                color: null,
+                stage: null,
+            },
+        }
+    },
     computed: {
         product() {
             return this.$store.getters.productById(1);
-        }
-        // ...mapGetters(
-        //     // { product: 'productsFromId' }
-        // )
+        },
     },
     beforeCreate() {
         this.$store.dispatch('getAllProducts');
@@ -57,15 +74,49 @@ export default {
         // console.log(this.product);
     },
     methods: {
-        changeStyle(id, url) {
+        changeStyle(id, url, event) {
             let payload = {
                 id: id,
                 url: url
             };
+
+            // this.$set(this.currnetStyle,'color',color);
+            let color = $('.style').children('.active')[0].innerText;
+            this.currnetStyle.color = color;
             this.$store.commit('setProductActiveUrl', payload)
         },
+        changePrice(id, price) {
+            let payload = {
+                id: id,
+                price: price
+            };
+            let storage = $('.storage').children('.active')[0].innerText;
+            this.currnetStyle.storage = storage;
+            this.$store.commit('setProductPrice', payload);
+        },
+        addCart() {
+            let color = $('.style').children('.active')[0].innerText;
+            let storage = $('.storage').children('.active')[0].innerText;
+            let payload = {
+                id: this.product.id,
+                color: color,
+                storage: storage
+            }
+            let style = this.$store.getters.productByStyle(payload);
+            style.imgUrl = this.product.activeStyleUrl;
+            // this.currnetStyle = this.$store.getters.productPriceById(payload);
+            let item = {
+                id: this.product.id,
+                name: this.product.name,
+                style: style
+            }
+            console.log(item);
+            this.$store.dispatch('addProductToCart', item);
+            // router.push('cart')
+            this.$router.push('/cart')
+        }
 
-    }
+    },
 }
 </script>
 
@@ -77,11 +128,34 @@ export default {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  .dl-horizontal {
+    .price {
+      color: #e4393c;
+      font-family: "microsoft yahei";
+      font-size: 22px;
+    }
+  }
   .dl-horizontal dd {
     margin-left: 50px;
   }
   .dl-horizontal dt {
     width: unset;
+  }
+  .dl-horizontal li {
+    float: left;
+    margin-right: 4px;
+    padding: 0 13px;
+    border: 1px solid #ccc;
+    line-height: 32px;
+    cursor: pointer;
+    line-height: 30px;
+    margin-bottom: 4px;
+  }
+  .dl-horizontal ul .active {
+    border: 1px solid #e4393c;
+  }
+  .dl-horizontal li:hover {
+    border: 1px solid #e4393c;
   }
 }
 </style>
