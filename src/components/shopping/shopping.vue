@@ -16,7 +16,7 @@
                             </dl>
                             <dl class="dl-horizontal">
                                 <dt style="line-height: 30px;">价格：</dt>
-                                <dd><span>￥</span><span class="price">{{product.price}}</span></dd>
+                                <dd><span>￥</span><span class="price">{{product.price.toFixed(2)}}</span></dd>
                             </dl>
                             <dl class="dl-horizontal">
                                 <dt>外观：</dt>

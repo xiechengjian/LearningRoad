@@ -1,65 +1,85 @@
 <template>
 <div class="goods-list">
     <Row>
-        <div v-for="good in goods" :key="good.id">
-            <Col :sm={span:8} :md={span:8}>
+        <div v-for="(good,index) in goods" :key="good.id">
+            <Col :sm={span:8} :md={span:8} >
                 <div class="good-item">
                             <!-- <Col :class="g-img" :sm={span:6} :md={span:6}> -->
                             <div class="g-img">
-                                <img :src="good.activeStyleUrl">
+                                <router-link class="item" :to="'/shopping/'+ good.id" >
+                                <img :src="goodInfo[index].activeStyleUrl" :ref="good.id">
+                                </router-link>
                             </div>
                              <!-- </Col> -->
                             <div class="g-scroll">
-                                    <ul class="style" >
-                                    <li v-for="style in good.style" :class="{active: good.activeStyleUrl == style.url}" :key="style.color" @mouseover.self="changeStyle(style.url,$event)">
+                                    <ul class="style">
+                                    <li v-for="style in good.style" :id="index" :class="{active: good.activeStyleUrl == style.url}" :key="style.color" @mouseover.self="changeStyle(style.url,$event)">
                                         <img :src="style.url" alt="">
                                     </li>
                                     </ul>
                             </div>
-                            <div class="g-price"></div>
-                            <div class="g-name"></div>
+                            <div class="g-price"><span>￥</span>{{good.price.toFixed(2)}}</div>
+                            <router-link class="item" :to="'/shopping/'+ good.id">
+                            <div class="g-name">{{good.name}}</div>
+                            </router-link>
                 </div>
             </Col>
-            <Col :sm={span:8,offset:8} :md={span:8,offset:8}>col-8</Col>
+            <!-- <Col :sm={span:8,offset:8} :md={span:8,offset:8}>col-8</Col> -->
         </div>
     </Row>
 </div>
 </template>
 
 <script>
-import shops from '../../store/shops'
-import $ from 'jQuery'
+import shops from "../../store/shops";
+import $ from "jQuery";
 export default {
-    computed: {
-        goods() {
-            return shops.getAllProducts()
-        }
-    },
-    data() {
-        return {
-        }
-    },
-    mounted() {
-    },
-    methods: {
-        changeStyle(url, event) {
-            // event.stopPropagation();
-            // console.log(event.target);
-            $(".g-img").children()[0].src = url;
-            $(event.target).siblings().find('active').removeClass("active")
-            let parent = $(event.target).parent();
-            $(parent[0]).find('.active').removeClass("active");
-            $(event.target).addClass("active");
-            // $(event).attr('src', url);
-            // let payload = {
-            //     id: id,
-            //     url: url
-            // };
-            // this.$set(this.currnetStyle,'color',color);
-            // this.$store.commit('setProductActiveUrl', payload)
-        }
+  computed: {
+    goods() {
+      return shops.getAllProducts();
     }
-}
+  },
+  data() {
+    return {
+      goodInfo: []
+    };
+  },
+  created() {
+    for (const item of this.goods) {
+      let temp = {
+        activeStyleUrl: item.activeStyleUrl,
+        activeUrl: null
+      };
+      this.goodInfo.push(temp);
+    }
+  },
+  mounted() {},
+  methods: {
+    changeStyle(url, event) {
+      // event.stopPropagation();
+      let index = event.target.id;
+      // console.log(this.$refs[id]);
+      //   this.$refs[id][0].src = url;
+      console.log(index);
+      this.goodInfo[index].activeStyleUrl = url;
+      // $($(event.target).parents()[2]).find('img')[0].src = url;
+      // $(event.target).siblings().find('.active').removeClass("active")
+      let parent = $(event.target).parent();
+      // console.log(parent[0].find('.active'));
+      $(event.target)
+        .siblings(".active")
+        .removeClass("active");
+      //     $(event.target).addClass("active");
+      // $(event).attr('src', url);
+      // let payload = {
+      //     id: id,
+      //     url: url
+      // };
+      // this.$set(this.currnetStyle,'color',color);
+      // this.$store.commit('setProductActiveUrl', payload)
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -73,6 +93,12 @@ export default {
   .good-item {
     height: 466px;
     padding: 12px 9px;
+    a {
+      color: unset;
+    }
+    a:hover {
+      color: red;
+    }
     .g-img {
       margin-bottom: 5px;
       img {
@@ -105,6 +131,23 @@ export default {
       li:hover {
         border: 1px solid #e4393c;
       }
+    }
+    .g-price {
+      width: 100%;
+      float: left;
+      margin-right: 10px;
+      color: #e4393c;
+      font-size: 20px;
+      span {
+        font-size: 16px;
+      }
+    }
+    .g-name {
+      height: 40px;
+      line-height: 20px;
+      margin-top: 8px;
+      width: 220px;
+      float: left;
     }
   }
 }
