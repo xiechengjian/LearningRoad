@@ -5,16 +5,22 @@
                 <Icon type="load-c" size=38 class="demo-spin-icon-load"></Icon>
                 <div>Loading</div>
             </Spin>
-   <router-view
-      class="view"
-      keep-alive
-      transition
-      transition-mode="out-in">
-    </router-view>
+            <div  class="menu">
+            <app-menu></app-menu>
+            </div>
+            <div class="main">
+                  <router-view
+                    keep-alive
+                    transition
+                    transition-mode="out-in">
+                </router-view>
+            </div>
+ 
   </div>
 </template>
 
 <script>
+import menu from './components/menu.vue'
 console.log('appVueLoading.........');
 window.onload = function () {
     document.getElementById('loading').style = "display:none";
@@ -28,7 +34,9 @@ export default {
     },
     mounted() {
     },
-    components: {}
+    components: {
+        'app-menu': menu
+    }
 }
 window.onhashchange = function (event) {
     console.log(event.oldURL, event.newURL);
@@ -37,13 +45,18 @@ window.onhashchange = function (event) {
 }
 </script>
 
-<style>
-/*#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 20px;
-}*/
+<style lang="scss" scoped>
+.menu {
+  position: fixed;
+  left: 0;
+  //   width: 155px;
+}
+.main {
+  position: absolute;
+  margin-left: 155px;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
 </style>
+

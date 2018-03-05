@@ -3,7 +3,7 @@
             <div class="row" v-if="product!=undefined">
                 <div class="product col-md-offset-2 col-sm-offset-2 col-md-8 col-sm-8">
                     <div class="row">
-                        <div class="gallery col-md-4 col-sm-4">
+                        <div class="gallery col-md-2 col-sm-2">
                             <img :src="product.activeStyleUrl" class="img-responsive" alt="">
                         </div>
                          <div class="detail col-md-6 col-sm-6">
