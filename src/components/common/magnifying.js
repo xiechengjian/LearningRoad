@@ -27,8 +27,34 @@ var XQ_bigimg = function (xq_big) {
         var pdiv = "#" + self.pdiv;
         $(pdiv).remove();
     });
+    $(".img-mask").mousemove(e => {
+        console.log(e);
+        // e.stopPropagation();
+        // console.log($('.img-mask').width());
+        // let x = e.offsetX - $('.img-mask').width() / 2,
+        //     y = e.offsetY - $('.img-mask').height() / 2;
+        // $(".img-mask").css({
+        //     'left': x + "px",
+        //     'top': y + "px"
+        // })
+        // console.log(this.xq_big);
+        // this.xq_big.off('mousemove')
+    })
     this.xq_big.mousemove(function (e) {
-        // console.log($(e.target));
+        // console.log($('.img-mask'));
+        // $(".img-mask").attr("style", {
+        //     left: $(e.target).offset().x,
+        //     top: $(e.target).offset().y
+        // })
+        e.stopPropagation();
+        console.log($('.img-mask').width());
+        let x = e.offsetX - $('.img-mask').width() / 2,
+            y = e.offsetY - $('.img-mask').height() / 2;
+        $(".img-mask").css({
+            'left': x + "px",
+            'top': y + "px"
+        })
+        // console.log($(".img-mask"));
         var scrollTop = $(document).scrollTop();
         var scaleX = (e.clientX - self.left) / self.width;//处于左边部分的距离
         var scaleY = (e.clientY - self.top + scrollTop) / self.height;//处于顶部部分的距离

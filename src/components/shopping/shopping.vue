@@ -3,8 +3,9 @@
             <div class="row" v-if="product!=undefined">
                 <div class="product col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-xs-12 col-md-8 col-sm-8 ">
                     <div class="row">
-                        <div class="img-responsive gallery col-md-2 col-sm-2 col-xs-2">
-                            <img :src="product.activeStyleUrl" alt="" class="img-mask" xq_big="true" setting='{"pwidth":400,"scale":2,"pheight":400,"margin_top":60,"margin_left":-20}'/>
+                        <div class="img-responsive gallery col-md-2 col-sm-2 col-xs-2 MagicZoom MagicThumb">
+                            <img :src="product.activeStyleUrl" alt="" xq_big="false" id="main_img" class="main_img agicZoom MagicThumb" setting='{"pwidth":400,"scale":2,"pheight":400,"margin_top":60,"margin_left":-20}'/>
+                            <!-- <div class="img-mask"></div> -->
                             <Icon type="search" class="search"></Icon>
                         </div>
                          <div class="detail col-md-6 col-sm-6 col-xs-8">
@@ -49,86 +50,85 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import $ from 'jQuery'
-import MA from '../common/magnifying.js'
+import { mapGetters, mapActions } from "vuex";
+import $ from "jQuery";
+import MA from "../common/magnifying.js";
+import MZP from "../common/mzp-packed.js";
 export default {
-    data() {
-        return {
-            currnetStyle: {
-                color: null,
-                stage: null,
-            },
-        }
-    },
-    computed: {
-        product() {
-            // console.log();
-            let id = this.$router.history.current.params.id;
-            // console.log(Number(id));
-            return this.$store.getters.productById(Number(id));
-        },
-    },
-    beforeCreate() {
-        this.$store.dispatch('getAllProducts');
-    },
-    created() {
-        // console.log(MA);
-        // this.product = this.$store.getters.productById(1);
-    },
-    mounted() {
-        // console.log(this.product);
-        // console.log(MA.XQ_bigimg);
-        setTimeout(() => {
-            MA.XQ_bigimg.init($("img[xq_big='true']"));
-        }, 500);
+  data() {
+    return {
+      currnetStyle: {
+        color: null,
+        stage: null
+      }
+    };
+  },
+  computed: {
+    product() {
+      // console.log();
+      let id = this.$router.history.current.params.id;
+      // console.log(Number(id));
+      return this.$store.getters.productById(Number(id));
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch("getAllProducts");
+  },
+  created() {
+    console.log(MZP);
+    // this.product = this.$store.getters.productById(1);
+  },
+  mounted() {
+    // console.log(this.product);
+    // console.log(MA.XQ_bigimg);
+    setTimeout(() => {
+      MA.XQ_bigimg.init($("img[xq_big='true']"));
+    }, 500);
+  },
+  methods: {
+    changeStyle(id, url, event) {
+      let payload = {
+        id: id,
+        url: url
+      };
 
+      // this.$set(this.currnetStyle,'color',color);
+      let color = $(".style").children(".active")[0].innerText;
+      this.currnetStyle.color = color;
+      this.$store.commit("setProductActiveUrl", payload);
     },
-    methods: {
-        changeStyle(id, url, event) {
-            let payload = {
-                id: id,
-                url: url
-            };
-
-            // this.$set(this.currnetStyle,'color',color);
-            let color = $('.style').children('.active')[0].innerText;
-            this.currnetStyle.color = color;
-            this.$store.commit('setProductActiveUrl', payload)
-        },
-        changePrice(id, price) {
-            let payload = {
-                id: id,
-                price: price
-            };
-            let storage = $('.storage').children('.active')[0].innerText;
-            this.currnetStyle.storage = storage;
-            this.$store.commit('setProductPrice', payload);
-        },
-        addCart() {
-            let color = $('.style').children('.active')[0].innerText;
-            let storage = $('.storage').children('.active')[0].innerText;
-            let payload = {
-                id: this.product.id,
-                color: color,
-                storage: storage
-            }
-            let style = this.$store.getters.productByStyle(payload);
-            style.imgUrl = this.product.activeStyleUrl;
-            // this.currnetStyle = this.$store.getters.productPriceById(payload);
-            let item = {
-                id: this.product.id,
-                name: this.product.name,
-                style: style
-            }
-            console.log(item);
-            this.$store.dispatch('addProductToCart', item);
-            // router.push('cart')
-            this.$router.push('/cart')
-        }
-
+    changePrice(id, price) {
+      let payload = {
+        id: id,
+        price: price
+      };
+      let storage = $(".storage").children(".active")[0].innerText;
+      this.currnetStyle.storage = storage;
+      this.$store.commit("setProductPrice", payload);
     },
-}
+    addCart() {
+      let color = $(".style").children(".active")[0].innerText;
+      let storage = $(".storage").children(".active")[0].innerText;
+      let payload = {
+        id: this.product.id,
+        color: color,
+        storage: storage
+      };
+      let style = this.$store.getters.productByStyle(payload);
+      style.imgUrl = this.product.activeStyleUrl;
+      // this.currnetStyle = this.$store.getters.productPriceById(payload);
+      let item = {
+        id: this.product.id,
+        name: this.product.name,
+        style: style
+      };
+      console.log(item);
+      this.$store.dispatch("addProductToCart", item);
+      // router.push('cart')
+      this.$router.push("/cart");
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -155,6 +155,19 @@ export default {
       width: 30px;
       height: 30px;
       text-align: center;
+    }
+    img {
+      cursor: move;
+    }
+    .img-mask {
+      width: 200px;
+      height: 200px;
+      top: 250px;
+      left: 200px;
+      position: absolute;
+      border: 1px solid #aaa;
+      opacity: 0.5;
+      background: 50% top no-repeat #fede4f;
     }
   }
   .dl-horizontal {
