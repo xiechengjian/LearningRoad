@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import 'iview/dist/styles/iview.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
+import './components/common/magnifying.js'
 import '../static/css/cartTable.css';
 import '../static/css/appMenu.css';
 import '../static/css/style.css';

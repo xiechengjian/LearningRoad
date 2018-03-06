@@ -137,6 +137,7 @@ export default {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  width: 70%;
   .cart-toolbar {
     position: relative;
     margin-top: 10px;

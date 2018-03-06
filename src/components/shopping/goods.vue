@@ -13,7 +13,7 @@
                              <!-- </Col> -->
                             <div class="g-scroll">
                                     <ul class="style">
-                                    <li v-for="style in good.style" :id="index" :class="{active: good.activeStyleUrl == style.url}" :key="style.color" @mouseover.self="changeStyle(style.url,$event)">
+                                    <li v-for="style in good.style" :id="index" :class="{active: good.activeStyleUrl == style.url}" :key="style.color" @mouseenter="changeStyle(style.url,$event)">
                                         <img :src="style.url" alt="">
                                     </li>
                                     </ul>
@@ -33,61 +33,63 @@
 <script>
 import shops from "../../store/shops";
 import $ from "jQuery";
+
 export default {
-  computed: {
-    goods() {
-      return shops.getAllProducts();
+    computed: {
+        goods() {
+            return shops.getAllProducts();
+        }
+    },
+    data() {
+        return {
+            goodInfo: []
+        };
+    },
+    created() {
+        for (const item of this.goods) {
+            let temp = {
+                activeStyleUrl: item.activeStyleUrl,
+                activeUrl: null
+            };
+            this.goodInfo.push(temp);
+        }
+    },
+    mounted() {
+    },
+    methods: {
+        changeStyle(url, event) {
+            // event.stopPropagation();
+            let index = event.target.id;
+            // console.log(this.$refs[id]);
+            //   this.$refs[id][0].src = url;
+            console.log(index);
+            this.goodInfo[index].activeStyleUrl = url;
+            // $($(event.target).parents()[2]).find('img')[0].src = url;
+            // $(event.target).siblings().find('.active').removeClass("active")
+            let parent = $(event.target).parent();
+            // console.log(parent[0].find('.active'));
+            $(event.target)
+                .siblings(".active")
+                .removeClass("active");
+            $(event.target).addClass("active");
+            // $(event).attr('src', url);
+            // let payload = {
+            //     id: id,
+            //     url: url
+            // };
+            // this.$set(this.currnetStyle,'color',color);
+            // this.$store.commit('setProductActiveUrl', payload)
+        }
     }
-  },
-  data() {
-    return {
-      goodInfo: []
-    };
-  },
-  created() {
-    for (const item of this.goods) {
-      let temp = {
-        activeStyleUrl: item.activeStyleUrl,
-        activeUrl: null
-      };
-      this.goodInfo.push(temp);
-    }
-  },
-  mounted() {},
-  methods: {
-    changeStyle(url, event) {
-      // event.stopPropagation();
-      let index = event.target.id;
-      // console.log(this.$refs[id]);
-      //   this.$refs[id][0].src = url;
-      console.log(index);
-      this.goodInfo[index].activeStyleUrl = url;
-      // $($(event.target).parents()[2]).find('img')[0].src = url;
-      // $(event.target).siblings().find('.active').removeClass("active")
-      let parent = $(event.target).parent();
-      // console.log(parent[0].find('.active'));
-      $(event.target)
-        .siblings(".active")
-        .removeClass("active");
-      //     $(event.target).addClass("active");
-      // $(event).attr('src', url);
-      // let payload = {
-      //     id: id,
-      //     url: url
-      // };
-      // this.$set(this.currnetStyle,'color',color);
-      // this.$store.commit('setProductActiveUrl', payload)
-    }
-  }
 };
 </script>
 
 <style scoped lang="scss">
 .goods-list {
-  margin-bottom: 20px;
-  padding-top: 50px;
+  margin-bottom: 5%;
+  padding-top: 5%;
   height: auto;
-  padding-left: 50px;
+  padding-left: 15%;
   position: relative;
   z-index: 1;
   .good-item {
@@ -103,7 +105,7 @@ export default {
       margin-bottom: 5px;
       img {
         width: 220px;
-        // height: 220px;
+        height: 220px;
         position: relative;
       }
     }
@@ -128,9 +130,9 @@ export default {
       ul .active {
         border: 1px solid #e4393c !important;
       }
-      li:hover {
-        border: 1px solid #e4393c;
-      }
+      //   li:hover {
+      //     border: 1px solid #e4393c;
+      //   }
     }
     .g-price {
       width: 100%;

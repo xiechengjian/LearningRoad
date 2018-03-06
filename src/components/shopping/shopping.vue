@@ -1,12 +1,13 @@
 <template>
     <div class="continer">
             <div class="row" v-if="product!=undefined">
-                <div class="product col-md-offset-2 col-sm-offset-2 col-md-8 col-sm-8">
+                <div class="product col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-xs-12 col-md-8 col-sm-8 ">
                     <div class="row">
-                        <div class="gallery col-md-2 col-sm-2">
-                            <img :src="product.activeStyleUrl" class="img-responsive" alt="">
+                        <div class="img-responsive gallery col-md-2 col-sm-2 col-xs-2">
+                            <img :src="product.activeStyleUrl" alt="" class="img-mask" xq_big="true" setting='{"pwidth":400,"scale":2,"pheight":400,"margin_top":60,"margin_left":-20}'/>
+                            <Icon type="search" class="search"></Icon>
                         </div>
-                         <div class="detail col-md-6 col-sm-6">
+                         <div class="detail col-md-6 col-sm-6 col-xs-8">
                             <h3 class="name"><span>{{product.name}}</span></h3>
                             <br>
                             <div class="options">
@@ -50,6 +51,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import $ from 'jQuery'
+import MA from '../common/magnifying.js'
 export default {
     data() {
         return {
@@ -61,17 +63,26 @@ export default {
     },
     computed: {
         product() {
-            return this.$store.getters.productById(1);
+            // console.log();
+            let id = this.$router.history.current.params.id;
+            // console.log(Number(id));
+            return this.$store.getters.productById(Number(id));
         },
     },
     beforeCreate() {
         this.$store.dispatch('getAllProducts');
     },
     created() {
+        // console.log(MA);
         // this.product = this.$store.getters.productById(1);
     },
     mounted() {
         // console.log(this.product);
+        // console.log(MA.XQ_bigimg);
+        setTimeout(() => {
+            MA.XQ_bigimg.init($("img[xq_big='true']"));
+        }, 500);
+
     },
     methods: {
         changeStyle(id, url, event) {
@@ -123,11 +134,29 @@ export default {
 <style scoped lang="scss">
 .continer {
   position: relative;
-  padding-top: 100px;
+  padding-top: 5%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  .img-responsive {
+    width: 450px;
+    height: 450px;
+    margin-left: -10%;
+    .search {
+      position: absolute;
+      bottom: -15px;
+      right: 10%;
+      font-size: 30px;
+      /* color: #eee; */
+      background-color: #afafaf;
+      color: #ffffffff;
+      line-height: 30px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+    }
+  }
   .dl-horizontal {
     .price {
       color: #e4393c;

@@ -97,7 +97,7 @@ export default new Router({
         name: 'learnjs'
     },
     {
-        path: '/shopping',
+        path: '/shopping/:id',
         component: shopping,
         name: 'shopping'
     },

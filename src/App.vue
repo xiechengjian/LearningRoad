@@ -5,7 +5,7 @@
                 <Icon type="load-c" size=38 class="demo-spin-icon-load"></Icon>
                 <div>Loading</div>
             </Spin>
-            <div  class="menu">
+            <div class="menu col-md-2 col-sm-2 col-xs-2" >
             <app-menu></app-menu>
             </div>
             <div class="main">
@@ -49,14 +49,21 @@ window.onhashchange = function (event) {
 .menu {
   position: fixed;
   left: 0;
-  //   width: 155px;
+  z-index: 999;
+  padding: 0;
+  transition: 0.5s;
+  //   width: 10%;
 }
 .main {
-  position: absolute;
-  margin-left: 155px;
+  position: relative;
+  //   margin-left:
   top: 0;
-  left: 0;
+  left: 10%;
   width: 100%;
+}
+.menu-close {
+  width: 5%;
+  padding: 0;
 }
 </style>
 
