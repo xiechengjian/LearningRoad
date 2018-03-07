@@ -10,13 +10,13 @@
 // import template from './index.html'
 // console.log(template);
 export default {
-    // template: template,
-    data() {
-        return {
-            html: "template"
-        }
-    }
-}
+  // template: template,
+  data() {
+    return {
+      html: "template"
+    };
+  }
+};
 </script>
 
 <style scoped>
@@ -27,5 +27,9 @@ export default {
   padding-left: 15%;
   position: relative;
   z-index: 1;
+}
+.warp {
+  width: 480px;
+  height: 800px;
 }
 </style>
