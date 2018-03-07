@@ -5,34 +5,43 @@
                 <Icon type="load-c" size=38 class="demo-spin-icon-load"></Icon>
                 <div>Loading</div>
             </Spin>
-            <div class="menu col-md-2 col-sm-2 col-xs-2" >
+            <div class="menu col-md-2 col-sm-2 col-xs-2"  v-if="isLogin">
             <app-menu></app-menu>
             </div>
             <div class="main">
                   <router-view
                     keep-alive
                     transition
-                    transition-mode="out-in">
+                    transition-mode="out-in" :emit=emit>
                 </router-view>
             </div>
- 
   </div>
 </template>
 
 <script>
-import menu from './components/menu.vue'
+console.time("appVueLoad")
+import menu from './components/menu.vue';
+import Vue from 'vue'
 console.log('appVueLoading.........');
-window.onload = function () {
-    document.getElementById('loading').style = "display:none";
-    console.log('appVueLoaded!');
-}
 export default {
     data() {
         return {
-            nums: [1, 8, 2, 5, 3, 4, 7, 9, 6]
+            isLogin: true,
+            nums: [1, 8, 2, 5, 3, 4, 7, 9, 6],
+            emit: new Vue()
         }
     },
+    created() {
+        this.emit.$on('isLogin', (isLogin) => {
+            this.isLogin = isLogin;
+        })
+    },
     mounted() {
+        // window.onload = function () {
+        document.getElementById('loading').style = "display:none";
+        console.log('appVueLoaded!');
+        console.timeEnd("appVueLoad")
+        // }
     },
     components: {
         'app-menu': menu
@@ -49,7 +58,7 @@ window.onhashchange = function (event) {
 .menu {
   position: fixed;
   left: 0;
-  z-index: 999;
+  z-index: 3;
   padding: 0;
   transition: 0.5s;
   //   width: 10%;

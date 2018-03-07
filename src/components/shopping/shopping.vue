@@ -1,10 +1,14 @@
 <template>
     <div class="continer">
+            <!-- <Spin fix id="loading">
+                <Icon type="load-c" size=38 class="demo-spin-icon-load"></Icon>
+                <div>Loading</div>
+            </Spin> -->
             <div class="row" v-if="product!=undefined">
                 <div class="product col-md-offset-2 col-sm-offset-2 col-xs-offset-2 col-xs-12 col-md-8 col-sm-8 ">
                     <div class="row">
                         <div class="img-responsive gallery col-md-2 col-sm-2 col-xs-2 MagicZoom MagicThumb">
-                            <img :src="product.activeStyleUrl" alt="" xq_big="false" id="main_img" class="main_img agicZoom MagicThumb" setting='{"pwidth":400,"scale":2,"pheight":400,"margin_top":60,"margin_left":-20}'/>
+                            <img :src="product.activeStyleUrl" alt="" xq_big="true" id="main_img" class="main_img agicZoom MagicThumb" setting='{"pwidth":400,"scale":2,"pheight":400,"margin_top":60,"margin_left":-20}'/>
                             <!-- <div class="img-mask"></div> -->
                             <Icon type="search" class="search"></Icon>
                         </div>
@@ -48,86 +52,96 @@
             </div>
     </div>
 </template>
-
 <script>
+console.time("shoppingLoad")
 import { mapGetters, mapActions } from "vuex";
 import $ from "jQuery";
 import MA from "../common/magnifying.js";
-import MZP from "../common/mzp-packed.js";
+// import MZP from "../common/mzp-packed.js";
 export default {
-  data() {
-    return {
-      currnetStyle: {
-        color: null,
-        stage: null
-      }
-    };
-  },
-  computed: {
-    product() {
-      // console.log();
-      let id = this.$router.history.current.params.id;
-      // console.log(Number(id));
-      return this.$store.getters.productById(Number(id));
-    }
-  },
-  beforeCreate() {
-    this.$store.dispatch("getAllProducts");
-  },
-  created() {
-    console.log(MZP);
-    // this.product = this.$store.getters.productById(1);
-  },
-  mounted() {
-    // console.log(this.product);
-    // console.log(MA.XQ_bigimg);
-    setTimeout(() => {
-      MA.XQ_bigimg.init($("img[xq_big='true']"));
-    }, 500);
-  },
-  methods: {
-    changeStyle(id, url, event) {
-      let payload = {
-        id: id,
-        url: url
-      };
+    data() {
+        return {
+            currnetStyle: {
+                color: null,
+                stage: null
+            }
+        };
+    },
+    computed: {
+        product() {
+            // console.log();
+            let id = this.$router.history.current.params.id;
+            // console.log(Number(id));
+            return this.$store.getters.productById(Number(id));
+        }
+    },
+    beforeCreate() {
+        this.$store.dispatch("getAllProducts");
+        document.getElementById('loading').style = "display:flex";
+        console.timeEnd("shoppingLoad")
+        // this.$Spin.show();
+    },
+    created() {
+        // console.log(MZP);
 
-      // this.$set(this.currnetStyle,'color',color);
-      let color = $(".style").children(".active")[0].innerText;
-      this.currnetStyle.color = color;
-      this.$store.commit("setProductActiveUrl", payload);
+        // this.product = this.$store.getters.productById(1);
     },
-    changePrice(id, price) {
-      let payload = {
-        id: id,
-        price: price
-      };
-      let storage = $(".storage").children(".active")[0].innerText;
-      this.currnetStyle.storage = storage;
-      this.$store.commit("setProductPrice", payload);
+    mounted() {
+        document.getElementById('loading').style = "display:none";
+        // this.$Spin.hide();
+        // console.log(this.product);
+        // console.log(MA.XQ_bigimg);
+        // console.log(this.$el);
+        // console.log($("img[xq_big='true']"));
+        setTimeout(() => {
+            MA.XQ_bigimg.init($("img[xq_big='true']"));
+        }, 500);
+        // setTimeout(() => {
+        //     MZP.MagicZoom_findZooms();
+        // }, 2000);
     },
-    addCart() {
-      let color = $(".style").children(".active")[0].innerText;
-      let storage = $(".storage").children(".active")[0].innerText;
-      let payload = {
-        id: this.product.id,
-        color: color,
-        storage: storage
-      };
-      let style = this.$store.getters.productByStyle(payload);
-      style.imgUrl = this.product.activeStyleUrl;
-      // this.currnetStyle = this.$store.getters.productPriceById(payload);
-      let item = {
-        id: this.product.id,
-        name: this.product.name,
-        style: style
-      };
-      console.log(item);
-      this.$store.dispatch("addProductToCart", item);
-      // router.push('cart')
-      this.$router.push("/cart");
+    methods: {
+        changeStyle(id, url, event) {
+            let payload = {
+                id: id,
+                url: url
+            };
+            // this.$set(this.currnetStyle,'color',color);
+            let color = $(".style").children(".active")[0].innerText;
+            this.currnetStyle.color = color;
+            this.$store.commit("setProductActiveUrl", payload);
+        },
+        changePrice(id, price) {
+            let payload = {
+                id: id,
+                price: price
+            };
+            let storage = $(".storage").children(".active")[0].innerText;
+            this.currnetStyle.storage = storage;
+            this.$store.commit("setProductPrice", payload);
+        },
+        addCart() {
+            let color = $(".style").children(".active")[0].innerText;
+            let storage = $(".storage").children(".active")[0].innerText;
+            let payload = {
+                id: this.product.id,
+                color: color,
+                storage: storage
+            };
+            let style = this.$store.getters.productByStyle(payload);
+            style.imgUrl = this.product.activeStyleUrl;
+            // this.currnetStyle = this.$store.getters.productPriceById(payload);
+            let item = {
+                id: this.product.id,
+                name: this.product.name,
+                style: style
+            };
+            console.log(item);
+            this.$store.dispatch("addProductToCart", item);
+            // router.push('cart')
+            this.$router.push("/cart");
+        }
     }
-  }
 };
 </script>
 
@@ -199,5 +213,8 @@ export default {
   .dl-horizontal li:hover {
     border: 1px solid #e4393c;
   }
+}
+.demo-spin-icon-load {
+  animation: ani-demo-spin 1s linear infinite;
 }
 </style>

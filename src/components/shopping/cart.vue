@@ -103,7 +103,11 @@ export default {
             ]
         }
     },
+    beforeCreate() {
+        document.getElementById('loading').style = "display:flex";
+    },
     mounted() {
+        document.getElementById('loading').style = "display:none";
     },
     methods: {
         rowClassName(row, index) {

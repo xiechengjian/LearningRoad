@@ -37,6 +37,9 @@ const cart = (resolve) => {
 const goods = (resolve) => {
     require(['@/components/shopping/goods.vue'], resolve)
 }
+const game = (resolve) => {
+    require(['@/components/game/game.vue'], resolve)
+}
 export default new Router({
     // mode:'history',
     routes: [{
@@ -110,6 +113,11 @@ export default new Router({
         path: '/goods',
         component: goods,
         name: 'goods'
+    },
+    {
+        path: '/game',
+        component: game,
+        name: 'game'
     },
 
     ]

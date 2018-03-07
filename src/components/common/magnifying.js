@@ -47,7 +47,7 @@ var XQ_bigimg = function (xq_big) {
         //     top: $(e.target).offset().y
         // })
         e.stopPropagation();
-        console.log($('.img-mask').width());
+        // console.log($('.img-mask').width());
         let x = e.offsetX - $('.img-mask').width() / 2,
             y = e.offsetY - $('.img-mask').height() / 2;
         $(".img-mask").css({

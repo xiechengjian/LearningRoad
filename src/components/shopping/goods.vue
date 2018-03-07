@@ -1,5 +1,9 @@
 <template>
 <div class="goods-list">
+                <Spin fix v-if="loading">
+                <Icon type="load-c" size="38" class="demo-spin-icon-load"></Icon>
+                <div>Loading</div>
+            </Spin>
     <Row>
         <div v-for="(good,index) in goods" :key="good.id">
             <Col :sm={span:8} :md={span:8} >
@@ -31,6 +35,7 @@
 </template>
 
 <script>
+console.time("goods")
 import shops from "../../store/shops";
 import $ from "jQuery";
 
@@ -42,8 +47,12 @@ export default {
     },
     data() {
         return {
-            goodInfo: []
+            goodInfo: [],
+            loading: true
         };
+    },
+    beforeCreate() {
+        document.getElementById('loading').style = "display:flex";
     },
     created() {
         for (const item of this.goods) {
@@ -55,6 +64,10 @@ export default {
         }
     },
     mounted() {
+        document.getElementById('loading').style = "display:none";
+        this.loading = false;
+        console.timeEnd("goods")
+        // console。
     },
     methods: {
         changeStyle(url, event) {

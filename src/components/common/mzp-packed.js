@@ -113,7 +113,7 @@ function MagicZoom_concat() {
 };
 
 function MagicZoom_withoutFirst(sequence, skip) {
-    result = [];
+    var result = [];
     for (var i = skip; i < sequence.length; i++) result.push(sequence[i]);
     return result
 };
@@ -661,8 +661,8 @@ function MagicZoom_findZooms() {
             smallImg.id = "sim" + rand;
             var bigCont = document.createElement("DIV");
             bigCont.id = "bc" + rand;
-            re = new RegExp(/opacity(\s+)?:(\s+)?(\d+)/i);
-            matches = re.exec(aels[i].rel);
+            var re = new RegExp(/opacity(\s+)?:(\s+)?(\d+)/i);
+            var matches = re.exec(aels[i].rel);
             var opacity = 50;
             if (matches) {
                 opacity = parseInt(matches[3])
@@ -1138,14 +1138,14 @@ MagicZoom_addEventListener(window, "load", MagicZoom_findZooms);
                 MagicTools.onDomReadyList[i].apply(document)
             }
         },
-        bindDomReady: function () {
+        bindDomReady: function (argu) {
             if (MagicTools.browser.webkit) {
                 (function () {
                     if (MagicTools.inArray(document.aq, ['loaded', 'complete'])) {
                         MagicTools.onDomReady();
                         return
                     }
-                    MagicTools.onDomReadyTimer = setTimeout(arguments.callee, 50);
+                    MagicTools.onDomReadyTimer = setTimeout(argu, 50);
                     return
                 })()
             }
@@ -1154,7 +1154,7 @@ MagicZoom_addEventListener(window, "load", MagicZoom_findZooms);
                     try {
                         document.documentElement.doScroll("left")
                     } catch (e) {
-                        MagicTools.onDomReadyTimer = setTimeout(arguments.callee, 50);
+                        MagicTools.onDomReadyTimer = setTimeout(argu, 50);
                         return
                     }
                     MagicTools.onDomReady()
@@ -1164,7 +1164,7 @@ MagicZoom_addEventListener(window, "load", MagicZoom_findZooms);
                 MagicTools.Event.add(document, 'DOMContentLoaded', function () {
                     for (var i = 0, l = document.styleSheets.length; i < l; i++) {
                         if (document.styleSheets[i].disabled) {
-                            MagicTools.onDomReadyTimer = setTimeout(arguments.callee, 50);
+                            MagicTools.onDomReadyTimer = setTimeout(argu, 50);
                             return
                         }
                         MagicTools.onDomReady()
@@ -2487,9 +2487,6 @@ if (MagicTools.browser.ie6) {
 MagicTools.Event.add(document, 'domready', function () {
     MagicThumb.init()
 });
-const Magic = {
-    MagicZoom_findZooms
-}
 export default {
     MagicZoom_findZooms
 }

@@ -59,8 +59,11 @@
 
 <script>
 // import router from 'router'
+console.time("loginLoad")
+import $ from 'jQuery';
 export default {
     name: "login",
+    props: ["emit"],
     data() {
         let name = "",
             pwd = "";
@@ -89,13 +92,24 @@ export default {
                 .join("");
         }
     },
+    created() {
+        console.log(this.emit);
+        this.emit.$emit('isLogin', false);
+        // console.log(this.$router);
+    },
     mounted() {
         var newImg = new Image();
-        newImg.src = "././static/img/bg.jpg";
+        newImg.src = "http://cjxieoss.oss-cn-shenzhen.aliyuncs.com/bg.jpg";
         newImg.onload = () => {
             this.loading = false;
-            console.log("this.loading = false");
+            console.timeEnd("loginLoad")
         };
+        $(".main").css("position", "unset");
+        // this.loading = false;
+
+    },
+    beforeDestroy() {
+        $(".main").css("position", "relative");
     },
     methods: {
         //提交按钮
@@ -118,6 +132,10 @@ export default {
             } else {
                 //登录成功
                 console.log("登录成功！");
+                this.$router.push('/goods');
+                setTimeout(() => {
+                    this.emit.$emit('isLogin', true);
+                }, 1000);
                 if (this.remberPwd) {
                     sessionStorage.setItem("remberPwd", this.remberPwd);
                     sessionStorage.setItem("fiberhome_name", this.username);
@@ -146,8 +164,8 @@ export default {
     }
 };
 </script>
-<style scoped>
-@import "../../static/css/login.css";
+<style scoped src="../../static/css/login.css">
+/* @import ""; */
 .box {
   animation: moveup 10s linear infinite;
 }
