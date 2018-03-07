@@ -14,134 +14,141 @@
 </template>
 
 <script>
-import $ from 'jQuery'
-import { mapGetters } from 'Vuex'
+import $ from "jQuery";
+import { mapGetters } from "Vuex";
 import productTip from "./productTip.vue";
 import quantityTip from "./quantityTip.vue";
 import operationTip from "./operationTip.vue";
 export default {
-    computed: {
-        ...mapGetters({
-            items: 'cartProducts'
-        })
-    },
-    data() {
-        return {
-            checkOut: {
-                totalPrice: 0,
-                items: []
-            },
-            columns: [
-                {
-                    type: 'selection',
-                    title: '全选',
-                    align: 'center',
-                    width: 60
-                },
-                {
-                    title: '商品',
-                    key: 'name',
-                    align: 'center',
-                    render: (h, params) => {
-                        return h(productTip, {
-                            props: {
-                                data: params.row.item
-                            }
-                        });
-                    },
-                    width: 250,
-                    //className: 'demo-table-color'
-                },
-                {
-                    title: '单价',
-                    key: 'price',
-                    align: 'center',
-                    render: (h, params) => {
-                        return h('span', ['￥', params.row.item.style.price.toFixed(2)])
-                    }
-                    //className: 'demo-table-color'
-                },
-                {
-                    title: '数量',
-                    key: 'quantity',
-                    align: 'center',
-                    render: (h, params) => {
-                        return h(quantityTip, {
-                            props: {
-                                product: params.row
-                            }
-                        });
-                    },
-                    //className: 'demo-table-color'
-                },
-                {
-                    title: '小计',
-                    key: 'subtotal',
-                    align: 'center',
-                    render: (h, params) => {
-                        return h('strong', ['￥', h('span', (params.row.item.style.price * params.row.quantity).toFixed(2))])
-                    }
-                    //className: 'demo-table-color'
-                },
-                {
-                    title: '操作',
-                    key: 'operation',
-                    align: 'center',
-                    render: (h, params) => {
-                        return h(operationTip, {
-                            props: {
-                                product: params.row,
-                                operationList: [{
-                                    name: '删除',
-                                    event: this.delCartProduct
-                                }]
-                            }
-                        });
-                    },
-                    //className: 'demo-table-color'
-                },
-            ]
-        }
-    },
-    beforeCreate() {
-        document.getElementById('loading').style = "display:flex";
-    },
-    mounted() {
-        document.getElementById('loading').style = "display:none";
-    },
-    methods: {
-        rowClassName(row, index) {
-            // console.log(row, index);
-            return 'demo-table-color';
+  computed: {
+    ...mapGetters({
+      items: "cartProducts"
+    })
+  },
+  data() {
+    return {
+      checkOut: {
+        totalPrice: 0,
+        items: []
+      },
+      columns: [
+        {
+          type: "selection",
+          title: "全选",
+          align: "center",
+          width: 60
         },
-        delCartProduct(product) {
-            // console.log(product);
-            this.$store.dispatch('removeProductFromCart', product);
+        {
+          title: "商品",
+          key: "name",
+          align: "center",
+          render: (h, params) => {
+            return h(productTip, {
+              props: {
+                data: params.row.item
+              }
+            });
+          },
+          width: 250
+          //className: 'demo-table-color'
         },
-        select(selection, row) {
-            console.log(selection, row);
-            let totalPrice = 0;
-            for (const item of selection) {
-                this.checkOut.items.push(item);
-                totalPrice += item.quantity * item.item.style.price;
-            }
-            this.checkOut.totalPrice = Number(totalPrice.toFixed(2));;
-            console.log(this.$refs.selection);
+        {
+          title: "单价",
+          key: "price",
+          align: "center",
+          render: (h, params) => {
+            return h("span", ["￥", params.row.item.style.price.toFixed(2)]);
+          }
+          //className: 'demo-table-color'
+        },
+        {
+          title: "数量",
+          key: "quantity",
+          align: "center",
+          render: (h, params) => {
+            return h(quantityTip, {
+              props: {
+                product: params.row
+              }
+            });
+          }
+          //className: 'demo-table-color'
+        },
+        {
+          title: "小计",
+          key: "subtotal",
+          align: "center",
+          render: (h, params) => {
+            return h("strong", [
+              "￥",
+              h(
+                "span",
+                (params.row.item.style.price * params.row.quantity).toFixed(2)
+              )
+            ]);
+          }
+          //className: 'demo-table-color'
+        },
+        {
+          title: "操作",
+          key: "operation",
+          align: "center",
+          render: (h, params) => {
+            return h(operationTip, {
+              props: {
+                product: params.row,
+                operationList: [
+                  {
+                    name: "删除",
+                    event: this.delCartProduct
+                  }
+                ]
+              }
+            });
+          }
+          //className: 'demo-table-color'
         }
+      ]
+    };
+  },
+  beforeCreate() {
+    document.getElementById("loading").style = "display:flex";
+  },
+  mounted() {
+    document.getElementById("loading").style = "display:none";
+  },
+  methods: {
+    rowClassName(row, index) {
+      // console.log(row, index);
+      return "demo-table-color";
+    },
+    delCartProduct(product) {
+      // console.log(product);
+      this.$store.dispatch("removeProductFromCart", product);
+    },
+    select(selection, row) {
+      console.log(selection, row);
+      let totalPrice = 0;
+      for (const item of selection) {
+        this.checkOut.items.push(item);
+        totalPrice += item.quantity * item.item.style.price;
+      }
+      this.checkOut.totalPrice = Number(totalPrice.toFixed(2));
+      console.log(this.$refs.selection);
     }
-
-}
+  }
+};
 </script>
 
 <style scoped lang='scss'>
 .continer {
   position: relative;
   padding-top: 100px;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 5%;
+  //   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto;
-  width: 70%;
+  //   margin-left: auto;
+  //   width: 70%;
   .cart-toolbar {
     position: relative;
     margin-top: 10px;

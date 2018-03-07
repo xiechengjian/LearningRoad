@@ -53,95 +53,94 @@
     </div>
 </template>
 <script>
-console.time("shoppingLoad")
+console.time("shoppingLoad");
 import { mapGetters, mapActions } from "vuex";
 import $ from "jQuery";
 import MA from "../common/magnifying.js";
 // import MZP from "../common/mzp-packed.js";
 export default {
-    data() {
-        return {
-            currnetStyle: {
-                color: null,
-                stage: null
-            }
-        };
-    },
-    computed: {
-        product() {
-            // console.log();
-            let id = this.$router.history.current.params.id;
-            // console.log(Number(id));
-            return this.$store.getters.productById(Number(id));
-        }
-    },
-    beforeCreate() {
-        this.$store.dispatch("getAllProducts");
-        document.getElementById('loading').style = "display:flex";
-        console.timeEnd("shoppingLoad")
-        // this.$Spin.show();
-    },
-    created() {
-        // console.log(MZP);
-
-        // this.product = this.$store.getters.productById(1);
-    },
-    mounted() {
-        document.getElementById('loading').style = "display:none";
-        // this.$Spin.hide();
-        // console.log(this.product);
-        // console.log(MA.XQ_bigimg);
-        // console.log(this.$el);
-        // console.log($("img[xq_big='true']"));
-        setTimeout(() => {
-            MA.XQ_bigimg.init($("img[xq_big='true']"));
-        }, 500);
-        // setTimeout(() => {
-        //     MZP.MagicZoom_findZooms();
-        // }, 2000);
-    },
-    methods: {
-        changeStyle(id, url, event) {
-            let payload = {
-                id: id,
-                url: url
-            };
-            // this.$set(this.currnetStyle,'color',color);
-            let color = $(".style").children(".active")[0].innerText;
-            this.currnetStyle.color = color;
-            this.$store.commit("setProductActiveUrl", payload);
-        },
-        changePrice(id, price) {
-            let payload = {
-                id: id,
-                price: price
-            };
-            let storage = $(".storage").children(".active")[0].innerText;
-            this.currnetStyle.storage = storage;
-            this.$store.commit("setProductPrice", payload);
-        },
-        addCart() {
-            let color = $(".style").children(".active")[0].innerText;
-            let storage = $(".storage").children(".active")[0].innerText;
-            let payload = {
-                id: this.product.id,
-                color: color,
-                storage: storage
-            };
-            let style = this.$store.getters.productByStyle(payload);
-            style.imgUrl = this.product.activeStyleUrl;
-            // this.currnetStyle = this.$store.getters.productPriceById(payload);
-            let item = {
-                id: this.product.id,
-                name: this.product.name,
-                style: style
-            };
-            console.log(item);
-            this.$store.dispatch("addProductToCart", item);
-            // router.push('cart')
-            this.$router.push("/cart");
-        }
+  data() {
+    return {
+      currnetStyle: {
+        color: null,
+        stage: null
+      }
+    };
+  },
+  computed: {
+    product() {
+      // console.log();
+      let id = this.$router.history.current.params.id;
+      // console.log(Number(id));
+      return this.$store.getters.productById(Number(id));
     }
+  },
+  beforeCreate() {
+    this.$store.dispatch("getAllProducts");
+    document.getElementById("loading").style = "display:flex";
+    console.timeEnd("shoppingLoad");
+    // this.$Spin.show();
+  },
+  created() {
+    // console.log(MZP);
+    // this.product = this.$store.getters.productById(1);
+  },
+  mounted() {
+    document.getElementById("loading").style = "display:none";
+    // this.$Spin.hide();
+    // console.log(this.product);
+    // console.log(MA.XQ_bigimg);
+    // console.log(this.$el);
+    // console.log($("img[xq_big='true']"));
+    setTimeout(() => {
+      MA.XQ_bigimg.init($("img[xq_big='true']"));
+    }, 500);
+    // setTimeout(() => {
+    //     MZP.MagicZoom_findZooms();
+    // }, 2000);
+  },
+  methods: {
+    changeStyle(id, url, event) {
+      let payload = {
+        id: id,
+        url: url
+      };
+      // this.$set(this.currnetStyle,'color',color);
+      let color = $(".style").children(".active")[0].innerText;
+      this.currnetStyle.color = color;
+      this.$store.commit("setProductActiveUrl", payload);
+    },
+    changePrice(id, price) {
+      let payload = {
+        id: id,
+        price: price
+      };
+      let storage = $(".storage").children(".active")[0].innerText;
+      this.currnetStyle.storage = storage;
+      this.$store.commit("setProductPrice", payload);
+    },
+    addCart() {
+      let color = $(".style").children(".active")[0].innerText;
+      let storage = $(".storage").children(".active")[0].innerText;
+      let payload = {
+        id: this.product.id,
+        color: color,
+        storage: storage
+      };
+      let style = this.$store.getters.productByStyle(payload);
+      style.imgUrl = this.product.activeStyleUrl;
+      // this.currnetStyle = this.$store.getters.productPriceById(payload);
+      let item = {
+        id: this.product.id,
+        name: this.product.name,
+        style: style
+      };
+      console.log(item);
+      this.$store.dispatch("addProductToCart", item);
+      // router.push('cart')
+      this.$router.push("/cart");
+    }
+  }
 };
 </script>
 
@@ -150,9 +149,9 @@ export default {
   position: relative;
   padding-top: 5%;
   padding-right: 15px;
-  padding-left: 15px;
+  // padding-left: 15px;
   margin-right: auto;
-  margin-left: auto;
+  // margin-left: auto;
   .img-responsive {
     width: 450px;
     height: 450px;

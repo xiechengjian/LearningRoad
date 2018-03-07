@@ -35,65 +35,65 @@
 </template>
 
 <script>
-console.time("goods")
+console.time("goods");
 import shops from "../../store/shops";
 import $ from "jQuery";
 
 export default {
-    computed: {
-        goods() {
-            return shops.getAllProducts();
-        }
-    },
-    data() {
-        return {
-            goodInfo: [],
-            loading: true
-        };
-    },
-    beforeCreate() {
-        document.getElementById('loading').style = "display:flex";
-    },
-    created() {
-        for (const item of this.goods) {
-            let temp = {
-                activeStyleUrl: item.activeStyleUrl,
-                activeUrl: null
-            };
-            this.goodInfo.push(temp);
-        }
-    },
-    mounted() {
-        document.getElementById('loading').style = "display:none";
-        this.loading = false;
-        console.timeEnd("goods")
-        // console。
-    },
-    methods: {
-        changeStyle(url, event) {
-            // event.stopPropagation();
-            let index = event.target.id;
-            // console.log(this.$refs[id]);
-            //   this.$refs[id][0].src = url;
-            console.log(index);
-            this.goodInfo[index].activeStyleUrl = url;
-            // $($(event.target).parents()[2]).find('img')[0].src = url;
-            // $(event.target).siblings().find('.active').removeClass("active")
-            let parent = $(event.target).parent();
-            // console.log(parent[0].find('.active'));
-            $(event.target)
-                .siblings(".active")
-                .removeClass("active");
-            $(event.target).addClass("active");
-            // $(event).attr('src', url);
-            // let payload = {
-            //     id: id,
-            //     url: url
-            // };
-            // this.$set(this.currnetStyle,'color',color);
-            // this.$store.commit('setProductActiveUrl', payload)
-        }
+  computed: {
+    goods() {
+      return shops.getAllProducts();
     }
+  },
+  data() {
+    return {
+      goodInfo: [],
+      loading: true
+    };
+  },
+  beforeCreate() {
+    document.getElementById("loading").style = "display:flex";
+  },
+  created() {
+    for (const item of this.goods) {
+      let temp = {
+        activeStyleUrl: item.activeStyleUrl,
+        activeUrl: null
+      };
+      this.goodInfo.push(temp);
+    }
+  },
+  mounted() {
+    document.getElementById("loading").style = "display:none";
+    this.loading = false;
+    console.timeEnd("goods");
+    // console。
+  },
+  methods: {
+    changeStyle(url, event) {
+      // event.stopPropagation();
+      let index = event.target.id;
+      // console.log(this.$refs[id]);
+      //   this.$refs[id][0].src = url;
+      console.log(index);
+      this.goodInfo[index].activeStyleUrl = url;
+      // $($(event.target).parents()[2]).find('img')[0].src = url;
+      // $(event.target).siblings().find('.active').removeClass("active")
+      let parent = $(event.target).parent();
+      // console.log(parent[0].find('.active'));
+      $(event.target)
+        .siblings(".active")
+        .removeClass("active");
+      $(event.target).addClass("active");
+      // $(event).attr('src', url);
+      // let payload = {
+      //     id: id,
+      //     url: url
+      // };
+      // this.$set(this.currnetStyle,'color',color);
+      // this.$store.commit('setProductActiveUrl', payload)
+    }
+  }
 };
 </script>
 
@@ -102,7 +102,7 @@ export default {
   margin-bottom: 5%;
   padding-top: 5%;
   height: auto;
-  padding-left: 15%;
+  //   padding-left: 15%;
   position: relative;
   z-index: 1;
   .good-item {

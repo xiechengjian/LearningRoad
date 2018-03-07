@@ -26,6 +26,14 @@
                 </MenuItem>
             </router-link>
         </MenuGroup>
+        <MenuGroup title="GAMEING">
+            <router-link class="item" to="/game">
+                <MenuItem name="4">
+                    <Icon type="ios-game-controller-b-outline"></Icon>
+                    <span class="item-name">Get The Cat</span>
+                </MenuItem>
+            </router-link>
+        </MenuGroup>
         <MenuGroup title="敬请期待">
         </MenuGroup>
     </Menu>
@@ -34,43 +42,45 @@
 </template>
 
 <script>
-import $ from 'jQuery'
-import { mapGetters } from 'Vuex'
+import $ from "jQuery";
+import { mapGetters } from "Vuex";
 export default {
-    computed: {
-        ...mapGetters({
-            cartProductsQuantity: 'cartProductsQuantity'
-        })
+  computed: {
+    ...mapGetters({
+      cartProductsQuantity: "cartProductsQuantity"
+    })
+  },
+  data() {
+    return {
+      name: "2",
+      isMenuOpen: true
+    };
+  },
+  methods: {
+    select(name) {
+      // console.log(name);
     },
-    data() {
-        return {
-            name: "2",
-            isMenuOpen: true
-        }
-    },
-    methods: {
-        select(name) {
-            // console.log(name);
-        },
-        menuChange() {
-            let isMenuOpen = this.isMenuOpen;
-            console.log(isMenuOpen);
-            if (isMenuOpen) {
-                this.isMenuOpen = false;
-                $('.menu').addClass('menu-close');
-                // $('.menu .ivu-menu ').addClass('no-padding');
-                // $('.menu li').addClass('padding-left');
-                $('.ivu-menu-item-group-title').addClass('hide');
-                $('.item-name').addClass('hide');
-            } else {
-                this.isMenuOpen = true;
-                $('.menu').removeClass('menu-close');
-                $('.ivu-menu-item-group-title').removeClass('hide');
-                $('.item-name').removeClass('hide');
-            }
-        }
+    menuChange() {
+      let isMenuOpen = this.isMenuOpen;
+      console.log(isMenuOpen);
+      if (isMenuOpen) {
+        this.isMenuOpen = false;
+        $(".menu").addClass("menu-close");
+        $(".main").addClass("main-move");
+        // $('.menu .ivu-menu ').addClass('no-padding');
+        // $('.menu li').addClass('padding-left');
+        $(".ivu-menu-item-group-title").addClass("hide");
+        $(".item-name").addClass("hide");
+      } else {
+        this.isMenuOpen = true;
+        $(".menu").removeClass("menu-close");
+        $(".ivu-menu-item-group-title").removeClass("hide");
+        $(".item-name").removeClass("hide");
+        $(".main").removeClass("main-move");
+      }
     }
-}
+  }
+};
 </script>
 
 <style scoped>

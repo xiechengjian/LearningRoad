@@ -6,13 +6,13 @@ const state = {
 //getters
 const getters = {
     cartProducts: (state) => {
-        console.log(state.products);
+        // console.log(state.products);
         return state.products;
     },
     cartProductsQuantity: (state) => {
         let quantity = 0;
         for (const item of state.products) {
-            console.log(item);
+            // console.log(item);
             if (item.hasOwnProperty('quantity')) {
                 quantity += item.quantity;
             }

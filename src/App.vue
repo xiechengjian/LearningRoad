@@ -19,39 +19,39 @@
 </template>
 
 <script>
-console.time("appVueLoad")
-import menu from './components/menu.vue';
-import Vue from 'vue'
-console.log('appVueLoading.........');
+console.time("appVueLoad");
+import menu from "./components/menu.vue";
+import Vue from "vue";
+console.log("appVueLoading.........");
 export default {
-    data() {
-        return {
-            isLogin: true,
-            nums: [1, 8, 2, 5, 3, 4, 7, 9, 6],
-            emit: new Vue()
-        }
-    },
-    created() {
-        this.emit.$on('isLogin', (isLogin) => {
-            this.isLogin = isLogin;
-        })
-    },
-    mounted() {
-        // window.onload = function () {
-        document.getElementById('loading').style = "display:none";
-        console.log('appVueLoaded!');
-        console.timeEnd("appVueLoad")
-        // }
-    },
-    components: {
-        'app-menu': menu
-    }
-}
-window.onhashchange = function (event) {
-    console.log(event.oldURL, event.newURL);
-    let hash = location.hash.slice(1);
-    document.body.style.color = hash;
-}
+  data() {
+    return {
+      isLogin: true,
+      nums: [1, 8, 2, 5, 3, 4, 7, 9, 6],
+      emit: new Vue()
+    };
+  },
+  created() {
+    this.emit.$on("isLogin", isLogin => {
+      this.isLogin = isLogin;
+    });
+  },
+  mounted() {
+    // window.onload = function () {
+    document.getElementById("loading").style = "display:none";
+    console.log("appVueLoaded!");
+    console.timeEnd("appVueLoad");
+    // }
+  },
+  components: {
+    "app-menu": menu
+  }
+};
+window.onhashchange = function(event) {
+  console.log(event.oldURL, event.newURL);
+  let hash = location.hash.slice(1);
+  document.body.style.color = hash;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -67,12 +67,18 @@ window.onhashchange = function (event) {
   position: relative;
   //   margin-left:
   top: 0;
-  left: 10%;
+  transition: 0.5s;
+  //   left: 10%;
+
+  padding-left: 20%;
   width: 100%;
 }
 .menu-close {
   width: 5%;
   padding: 0;
+}
+.main-move {
+  padding-left: 10%;
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
     <div>
             <div class="game-warp">
-                <iframe src="static/game/index.html"></iframe>
+                <iframe src="./static/game/index.html" class="warp"></iframe>
             </div>
     </div>
 </template>

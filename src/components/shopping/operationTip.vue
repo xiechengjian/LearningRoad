@@ -10,11 +10,11 @@
 
 <script>
 export default {
-    props: ["operationList", "product"],
-    mounted() {
-        console.log(this.product);
-    }
-}
+  props: ["operationList", "product"],
+  mounted() {
+    // console.log(this.product);
+  }
+};
 </script>
 
 <style scoped>
