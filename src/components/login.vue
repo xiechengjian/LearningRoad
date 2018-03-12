@@ -62,109 +62,103 @@
 console.time("loginLoad");
 import $ from "jQuery";
 export default {
-  name: "login",
-  props: ["emit"],
-  data() {
-    let name = "",
-      pwd = "";
-    if (sessionStorage.getItem("remberPwd")) {
-      name = sessionStorage.getItem("fiberhome_name");
-      pwd = sessionStorage.getItem("fiberhome_pwd");
-    }
-    return {
-      message: "HELLO",
-      pwdErrMsg: "",
-      userErrMsg: "",
-      username: name,
-      password: pwd,
-      autoLogin: false,
-      remberPwd: false,
-      loading: true
-    };
-  },
-  computed: {
-    // 计算属性的 getter
-    reversedMessage: function() {
-      // `this` 指向 vm 实例
-      return this.message
-        .split("")
-        .reverse()
-        .join("");
-    }
-  },
-  created() {
-    console.log(this.emit);
-    this.emit.$emit("isLogin", false);
-    // console.log(this.$router);
-  },
-  mounted() {
-    var newImg = new Image();
-    newImg.src = "http://cjxieoss.oss-cn-shenzhen.aliyuncs.com/bg.jpg";
-    newImg.onload = () => {
-      this.loading = false;
-      console.timeEnd("loginLoad");
-    };
-    $(".main").css({ position: "unset", padding: "0" });
-    // this.loading = false;
-  },
-  beforeDestroy() {
-    $(".main").css({ position: "relative", "padding-left": "20%" });
-  },
-  methods: {
-    //提交按钮
-    submit() {
-      if (!this.username) {
-        this.userErrMsg = "请输入用户名";
-        return;
-      } else if (!this.password) {
-        this.pwdErrMsg = "请输入密码";
-        return;
-      } else if (this.username !== "admin" && this.username !== "bug") {
-        this.userErrMsg = "用户名不存在";
-        return;
-      } else if (this.password !== "admin" && this.password !== "bug") {
-        this.pwdErrMsg = "密码错误";
-        return;
-      } else if (this.username == "bug" && this.password == "bug") {
-        // router.push('/fo');
-        location.href = "#/fo";
-      } else {
-        //登录成功
-        console.log("登录成功！");
-        this.$router.push("/goods");
-        setTimeout(() => {
-          this.emit.$emit("isLogin", true);
-        }, 1000);
-        if (this.remberPwd) {
-          sessionStorage.setItem("remberPwd", this.remberPwd);
-          sessionStorage.setItem("fiberhome_name", this.username);
-          sessionStorage.setItem("fiberhome_pwd", this.password);
+    name: "login",
+    props: ["emit"],
+    data() {
+        return {
+            message: "HELLO",
+            pwdErrMsg: "",
+            userErrMsg: "",
+            username: "admin",
+            password: "admin",
+            autoLogin: false,
+            remberPwd: false,
+            loading: true
+        };
+    },
+    computed: {
+        // 计算属性的 getter
+        reversedMessage: function () {
+            // `this` 指向 vm 实例
+            return this.message
+                .split("")
+                .reverse()
+                .join("");
         }
-      }
     },
-    nameBlur() {
-      if (this.username.length < 3 || this.username.length > 8) {
-        this.userErrMsg = "用户名长度必须大于三位数且少于八位数";
-      }
+    created() {
+        console.log(this.emit);
+        this.emit.$emit("isLogin", false);
+        // console.log(this.$router);
     },
-    pwdBlur() {
-      if (this.password.length < 3 || this.password.length > 8) {
-        this.pwdErrMsg = "密码长度必须大于三位数且少于八位数";
-      }
+    mounted() {
+        var newImg = new Image();
+        newImg.src = "http://cjxieoss.oss-cn-shenzhen.aliyuncs.com/bg.jpg";
+        newImg.onload = () => {
+            this.loading = false;
+            console.timeEnd("loginLoad");
+        };
+        $(".main").css({ position: "unset", padding: "0" });
+        // this.loading = false;
+    },
+    beforeDestroy() {
+        $(".main").css({ position: "relative", "padding-left": "20%" });
+    },
+    methods: {
+        //提交按钮
+        submit() {
+            // if (!this.username) {
+            //     this.userErrMsg = "请输入用户名";
+            //     return;
+            // } else if (!this.password) {
+            //     this.pwdErrMsg = "请输入密码";
+            //     return;
+            // } else if (this.username !== "admin" && this.username !== "bug") {
+            //     this.userErrMsg = "用户名不存在";
+            //     return;
+            // } else if (this.password !== "admin" && this.password !== "bug") {
+            //     this.pwdErrMsg = "密码错误";
+            //     return;
+            // } else if (this.username == "bug" && this.password == "bug") {
+            //     // router.push('/fo');
+            //     location.href = "#/fo";
+            // } else {
+            //登录成功
+            console.log("登录成功！");
+            this.$router.push("/goods");
+            setTimeout(() => {
+                this.emit.$emit("isLogin", true);
+            }, 1000);
+            if (this.remberPwd) {
+                sessionStorage.setItem("remberPwd", this.remberPwd);
+                sessionStorage.setItem("fiberhome_name", this.username);
+                sessionStorage.setItem("fiberhome_pwd", this.password);
+            }
+            // }
+        },
+        nameBlur() {
+            if (this.username.length < 3 || this.username.length > 8) {
+                this.userErrMsg = "用户名长度必须大于三位数且少于八位数";
+            }
+        },
+        pwdBlur() {
+            if (this.password.length < 3 || this.password.length > 8) {
+                this.pwdErrMsg = "密码长度必须大于三位数且少于八位数";
+            }
+        }
+    },
+    watch: {
+        autoLogin: function autogin(argument) {
+            // sessionStorage.setItem('isLogin', now);
+        },
+        remberPwd: function remberPwd(now) {
+            console.log(now);
+        }
     }
-  },
-  watch: {
-    autoLogin: function autogin(argument) {
-      // sessionStorage.setItem('isLogin', now);
-    },
-    remberPwd: function remberPwd(now) {
-      console.log(now);
-    }
-  }
 };
 </script>
 <style scoped src="../../static/css/login.css">
-/* @import ""; */
+/* @import "../../static/css/login.css"; */
 .box {
   animation: moveup 10s linear infinite;
 }
