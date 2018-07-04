@@ -2,7 +2,7 @@
     <div >
 <Row :gutter= "16"  class="code-row-bg">
         <Button span="8" class="LightPrimary">col-12</Button>
-        <Col span="8">asdasd</Col>
+        <!-- <Col span="8"></Col> -->
 </Row>
             <button type="button" @mouseup="toggle" @focus="bottonFocus">Toggle Login type</button>
             <button type="button" @mouseup="reset">reset</button>
@@ -184,6 +184,7 @@ export default {
   },
   methods: {
     toggle: function() {
+        console.log("object");
       //this.init = true;
       //this.loginType = ! this.loginType;
       // this.items[0].message='ooo';

@@ -5,8 +5,7 @@ import test from '@/components/test.vue'
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 Vue.use(Router)
-let a = 98
-console.log(a)
+let a = 98;
 const childRender = (resolve) => {
     require(['@/components/childRender.vue'], resolve)
 }
